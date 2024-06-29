@@ -29,7 +29,7 @@ class Database():
     def __repr__(self) -> str:
         return f"<Database path={self.path} name={self.name} auto_init={self.auto_init}>"
     
-        def set(self, key: Any, value: Any) -> Any:
+    def set(self, key: Any, value: Any) -> Any:
         """
         Set value by key and return the value.
         """
