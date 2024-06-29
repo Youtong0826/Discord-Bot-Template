@@ -1,5 +1,4 @@
 import os
-from dotenv import load_dotenv
 
 from typing import (
     Any,
@@ -13,7 +12,6 @@ from discord import (
     Interaction, 
     ComponentType,
     Button as DiscordButton,
-    ApplicationContext as AppCtx
 )
 
 from discord.ui import (
@@ -23,13 +21,16 @@ from discord.ui import (
 )
 
 from lib.functions import get_now_time
-
-load_dotenv()
+from database import Database
 
 class Bot(Bot):
-    def __init__(self, description=None, *args, **options):
+    def __init__(self, description=None, database_path: str = None, *args, **options):
         super().__init__(description, *args, **options)
-        self.token = os.getenv("TOKEN")
+        self.__database_path = database_path
+        
+    @property
+    def database(self):
+        return Database(self.__database_path)
         
     def get_interaction_value(self, interaction: Interaction):
         return [data.get("components",{})[0].get("value") for data in interaction.data.get("components",{})]
