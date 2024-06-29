@@ -1,14 +1,9 @@
 import os
+from dotenv import load_dotenv
 
 from typing import (
     Any,
     Union,
-)
-
-from datetime import (
-    datetime, 
-    timedelta, 
-    timezone
 )
 
 from discord import (
@@ -27,7 +22,7 @@ from discord.ui import (
     Select
 )
 
-from dotenv import load_dotenv
+from lib.functions import get_now_time
 
 load_dotenv()
 
@@ -84,3 +79,6 @@ class Bot(Bot):
                     print(f'-- {mode}ed "{Filename}"')
 
         print(f"{mode}ing {folder} end")
+        
+    def log(self, *text: str, sep: str = None):
+        print(get_now_time().strftime('[%Y/%m/%d %H:%M:%S]'), *text, sep=sep)
