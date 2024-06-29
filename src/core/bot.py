@@ -65,3 +65,22 @@ class Bot(Bot):
             case _:
                 for c in component.children:
                     self.from_component(view, c)
+                    
+    def load_extension(self, folder: str, mode: str = "load", is_notice: bool = True) -> None:
+
+        loading_method = {
+            "load": super().load_extension,
+            "reload": super().reload_extension,
+            "unload": super().unload_extension
+        }
+
+        if is_notice:
+            print(f"start {mode}ing {folder}")
+
+        for Filename in os.listdir(f'src/{folder}'):
+            if Filename.endswith(".py"):
+                loading_method[mode](f"{folder}.{Filename[:-3]}")
+                if is_notice:
+                    print(f'-- {mode}ed "{Filename}"')
+
+        print(f"{mode}ing {folder} end")
